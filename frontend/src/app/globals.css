@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/* ── Tailwind v4 CSS-first theme ─────────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-void:    #07090f;
+  --color-surface: #0d1117;
+  --color-panel:   #111820;
+  --color-border:  #1c2633;
+  --color-muted:   #1e2d3d;
+
+  --color-cyan-dim:    #0e4a5a;
+  --color-cyan-mid:    #0891b2;
+  --color-cyan-bright: #22d3ee;
+  --color-cyan-glow:   #67e8f9;
+
+  --color-vital:   #10b981;
+  --color-warn:    #f59e0b;
+  --color-alert:   #ef4444;
+
+  --color-ink:     #e2eaf4;
+  --color-subtext: #7a9bb5;
+  --color-ghost:   #3d5a73;
+
+  /* Fonts */
+  --font-display: "DM Serif Display", Georgia, serif;
+  --font-mono:    "JetBrains Mono", "Fira Code", monospace;
+  --font-body:    "DM Sans", system-ui, sans-serif;
+
+  /* Animations */
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-scan:       scan 2s linear infinite;
+  --animate-fade-in:    fadeIn 0.4s ease forwards;
+  --animate-slide-up:   slideUp 0.4s ease forwards;
+  --animate-glow-pulse: glowPulse 2s ease-in-out infinite;
+
+  /* Keyframes */
+  @keyframes scan {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 8px #22d3ee33; }
+    50%       { box-shadow: 0 0 20px #22d3ee88; }
+  }
+}
+
+/* ── Base resets ─────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #1c2633 transparent;
+  }
+  ::-webkit-scrollbar       { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #1c2633; border-radius: 2px; }
+  ::selection { background: #22d3ee22; color: #67e8f9; }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ── Component utilities ─────────────────────────────────────────────────── */
+@layer components {
+  .panel-glass {
+    background-color: color-mix(in srgb, var(--color-panel) 80%, transparent);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+  }
+
+  .btn-primary {
+    background-color: var(--color-cyan-mid);
+    color: var(--color-void);
+    font-family: var(--font-body);
+    font-weight: 500;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    box-shadow: 0 0 16px color-mix(in srgb, var(--color-cyan-mid) 20%, transparent);
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-cyan-bright);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--color-cyan-bright) 35%, transparent);
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .btn-ghost {
+    border: 1px solid var(--color-border);
+    color: var(--color-subtext);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    background: transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-cyan-dim);
+    color: var(--color-ink);
+  }
+
+  .input-base {
+    background-color: color-mix(in srgb, var(--color-muted) 50%, transparent);
+    border: 1px solid var(--color-border);
+    color: var(--color-ink);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: all 0.2s;
+    width: 100%;
+    font-family: var(--font-body);
+  }
+  .input-base::placeholder { color: var(--color-ghost); }
+  .input-base:focus {
+    border-color: var(--color-cyan-mid);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-cyan-mid) 20%, transparent);
+  }
+
+  .tag-high     { color: var(--color-alert); background: color-mix(in srgb, var(--color-alert) 10%, transparent); border: 1px solid color-mix(in srgb, var(--color-alert) 20%, transparent); padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: var(--font-mono); }
+  .tag-moderate { color: var(--color-warn);  background: color-mix(in srgb, var(--color-warn) 10%, transparent);  border: 1px solid color-mix(in srgb, var(--color-warn) 20%, transparent);  padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: var(--font-mono); }
+  .tag-low      { color: var(--color-vital); background: color-mix(in srgb, var(--color-vital) 10%, transparent); border: 1px solid color-mix(in srgb, var(--color-vital) 20%, transparent); padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-family: var(--font-mono); }
+}
+
+/* ── Scanline effect ──────────────────────────────────────────────────────── */
+.scanline {
+  position: relative;
+  overflow: hidden;
+}
+.scanline::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee22, transparent);
+  animation: scan 3s linear infinite;
+}
+
+/* ── Background grid ─────────────────────────────────────────────────────── */
+.bg-grid-subtle {
+  background-image:
+    linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,211,238,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
