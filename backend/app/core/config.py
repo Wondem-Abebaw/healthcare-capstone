@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     qdrant_url:        str = "http://localhost:6333"
     qdrant_collection: str = "medical_literature"
     qdrant_dim:        int = 768   # text-embedding-004 output dim
+    qdrant_api_key: str = ""
 
     # MinIO — replaces GCS (S3-compatible; swap endpoint for prod)
     minio_endpoint:       str  = "localhost:9000"
